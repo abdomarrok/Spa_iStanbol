@@ -61,8 +61,11 @@ footer a {
         margin-right: 10px;
     }
 
-    /* Adjust other styles as needed */
+    .navbar-brand img {
+        height: 30px; /* Adjust the height as needed for smaller screens */
+    }
 }
+    /* Adjust other styles as needed */
 
 /* Responsive styles for even smaller screens */
 @media (max-width: 480px) {
