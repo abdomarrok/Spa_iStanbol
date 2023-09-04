@@ -4,6 +4,12 @@
     src: local('noto-urdu'), url(fonts/noto-urdu.ttf) format('truetype');
     unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+FB50-FDFF, U+FE80-FEFC;
 }
+
+@font-face {
+    font-family: 'cairo';
+    src: local('cairo'), url(fonts/cairo.ttf) format('truetype');
+    unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+FB50-FDFF, U+FE80-FEFC;
+}
 body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
@@ -15,6 +21,11 @@ header {
     color: #fff;
     padding: 20px;
     font-family: noto-urdu;
+}
+
+p{
+    font-family: cairo;
+    font-size: 15px;
 }
 
 nav ul {
