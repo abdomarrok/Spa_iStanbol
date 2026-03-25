@@ -18,6 +18,8 @@
     const lightboxClose = document.getElementById('lightboxClose');
     const revealElements = document.querySelectorAll('.reveal');
     const sections = document.querySelectorAll('section[id]');
+    const contactForm = document.getElementById('contactForm');
+    const backToTopBtn = document.getElementById('backToTop');
 
     // ---- Navbar Scroll Effect ----
     function handleNavbarScroll() {
@@ -142,6 +144,14 @@
         });
     });
 
+    // Handle broken images
+    document.querySelectorAll('img').forEach(function (img) {
+        img.addEventListener('error', function () {
+            this.style.display = 'none';
+            console.warn('Failed to load image:', this.src);
+        });
+    });
+
     function closeLightbox() {
         lightbox.classList.remove('active');
         lightbox.setAttribute('aria-hidden', 'true');
@@ -163,6 +173,59 @@
         }
     });
 
+    // ---- Contact Form ----
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.name || !data.email || !data.message) {
+                alert('يرجى ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                alert('يرجى إدخال بريد إلكتروني صحيح');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'جاري الإرسال...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (replace with actual API call)
+            setTimeout(() => {
+                alert('شكراً لك! تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 1000);
+        });
+    }
+
+    // ---- Back to Top Button ----
+    function toggleBackToTop() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    }
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     // ---- Scroll Event Listener ----
     var ticking = false;
     window.addEventListener('scroll', function () {
@@ -170,6 +233,7 @@
             window.requestAnimationFrame(function () {
                 handleNavbarScroll();
                 highlightActiveLink();
+                toggleBackToTop();
                 ticking = false;
             });
             ticking = true;
@@ -179,5 +243,6 @@
     // ---- Init ----
     handleNavbarScroll();
     highlightActiveLink();
+    toggleBackToTop();
 
 })();
